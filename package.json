@@ -1,0 +1,31 @@
+{
+  "name": "graphql-setup",
+  "description": "graphql backend server",
+  "type": "module",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ceelogre/graphql-setup.git"
+  },
+  "keywords": [
+    "graphql",
+    "nodejs",
+    "apollo",
+    "prisma"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ceelogre/graphql-setup/issues"
+  },
+  "homepage": "https://github.com/ceelogre/graphql-setup#readme",
+ "dependencies": {
+    "apollo-server": "^3.6.3",
+    "graphql": "^16.3.0"
+  }
+}
