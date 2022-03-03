@@ -1,6 +1,6 @@
 import { ApolloServer } from 'apollo-server'
 
-const User = [{
+const Users = [{
   id: 34903,
   name: 'GG magree'
 }
@@ -15,12 +15,26 @@ type User {
   id: ID!,
   name: String!
 }
+
+type Mutation {
+  post(id: String!,  name: String!): User!
+}
 `
 
 const resolvers = {
   Query: {
     info: () => 'this is an API. 646',
-    users: () => User
+    users: () => Users
+  },
+  Mutation: {
+    post: (parent, args) => {
+      const User = {
+        id: args.id,
+        name: args.name
+      }
+      Users.push(User)
+      return User
+    }
   }
 }
 
