@@ -1,5 +1,12 @@
 import { ApolloServer } from 'apollo-server'
+import pkg from '@prisma/client'
 
+const { PrismaClient} = pkg
+const prisma = new PrismaClient()
+
+async function main () {
+  await prisma.$connect()
+}
 const Users = [{
   id: 34903,
   name: 'GG magree'
