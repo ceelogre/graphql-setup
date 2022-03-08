@@ -1,46 +1,45 @@
 import { ApolloServer } from 'apollo-server'
+import prisma from './queries.js'
 
-const Users = [{
-  id: 34903,
-  name: 'GG magree'
-}
-]
 const typeDefs = `
 type Query {
   info: String!,
-  users: [User!]!,
-  user(id: ID!): User
+  users: [user]!
 }
-type User {
-  id: ID!,
-  name: String!
+type user {
+   id: String!
+  ,name: String!
 }
-
 type Mutation {
-  post(id: String!,  name: String!): User!
+  post(name: String): user!
 }
 `
 
 const resolvers = {
   Query: {
     info: () => 'this is an API. 646',
-    users: () => Users
+    users: async (parent, args, context) => {
+      return context.prisma.user.findMany()
+    }
   },
   Mutation: {
-    post: (parent, args) => {
-      const User = {
-        id: args.id,
-        name: args.name
-      }
-      Users.push(User)
-      return User
+    post: (parent, args, context, info) => {
+      const newUser = context.prisma.user.create({
+        data: {
+         name: args.name 
+        }
+      })
+      return newUser
     }
   }
 }
 
 const server = new ApolloServer({
   typeDefs,
-  resolvers
+  resolvers,
+  context: {
+    prisma
+  }
 })
 
 server
