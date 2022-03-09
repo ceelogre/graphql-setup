@@ -11,7 +11,8 @@ type user {
   ,name: String!
 }
 type Mutation {
-  post(name: String): user!
+  post(name: String): user!,
+  update(name: String, name_: String): user!
 }
 `
 
@@ -30,6 +31,16 @@ const resolvers = {
         }
       })
       return newUser
+    },
+    update: (parent, args, context, info) => {
+      return context.prisma.user.update({
+        where: {
+          name: args.name
+        },
+        data: {
+          name: args.name_
+        }
+      })
     }
   }
 }
