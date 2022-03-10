@@ -11,7 +11,9 @@ type user {
   ,name: String!
 }
 type Mutation {
-  post(name: String): user!
+  post(name: String): user!,
+  update(name: String, name_: String): user!,
+  delete(name: String): user!
 }
 `
 
@@ -30,6 +32,34 @@ const resolvers = {
         }
       })
       return newUser
+    },
+    update: (parent, args, context) => {
+      return context.prisma.user.update({
+        where: {
+          name: args.name
+        },
+        data: {
+          name: args.name_
+        }
+      })
+    },
+    delete: (parent, args, context) => {
+      let result = ''
+      try {
+        result = context.prisma.user.delete({
+          where: {
+          name: args.name
+        }
+      })
+      }
+      catch(e) {
+        console.error(e)
+        result = "There was an error deleting the user"
+      }
+      finally {
+        return result
+      }
+      
     }
   }
 }
