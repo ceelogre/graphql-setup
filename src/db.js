@@ -1,4 +1,4 @@
-import { DynamoDBClient, ListTablesCommand, PutItemCommand, GetItemCommand, BatchGetItemCommand } from "@aws-sdk/client-dynamodb";
+import { DynamoDBClient, ListTablesCommand, PutItemCommand, GetItemCommand, ScanCommand } from "@aws-sdk/client-dynamodb";
 
 
 (async () => {
@@ -36,34 +36,24 @@ const createUser = async (name) => {
   }
 }
 
-const describeTable = async () => {
+const getUsers = async () => {
   const client = new DynamoDBClient({
     region: 'us-east-1'
   })
-  const command = new BatchGetItemCommand({
-    RequestItems: {
-      "user": {
-        Keys: [
-          {
-            "name": {
-              S: "Matt"
-            }
-          }
-        ]
-      }
-    }
+  const command = new ScanCommand({
+    TableName: 'user'
   })
   try {
     const results = await client.send(command)
-    console.info('Table ', results.Responses)
+    console.info('All users: ', results.Items)
     return results
   } catch(err) {
     console.error('Error describing table', err)
   }
 }
 
-const getUsers = async () => {
-  describeTable()
+const getUser = async () => {
+  getUsers()
   const client = new DynamoDBClient({
     region: 'us-east-1'
   })
@@ -85,4 +75,4 @@ const getUsers = async () => {
     return 'Failed to get users'
   }
 }
-export { createUser, getUsers}
+export { createUser, getUsers, getUser}
