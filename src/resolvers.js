@@ -1,4 +1,4 @@
-import { createUser, deleteUser, getUsers} from './db.js'
+import { createUser, deleteUser, getUsers, updateUser} from './db.js'
 
 const resolvers = {
   Query: {
@@ -25,14 +25,19 @@ const resolvers = {
       }
     },
     update: (parent, args, context) => {
-      return context.prisma.user.update({
-        where: {
-          name: args.name
-        },
-        data: {
-          name: args.name_
-        }
-      })
+      if (process.env.NODE_ENV == 'development') {
+
+        return context.prisma.user.update({
+          where: {
+            name: args.name
+          },
+          data: {
+            name: args.name_
+          }
+        })
+    } else {
+      return updateUser(args.name, args.name_)
+    }
     },
     delete: (parent, args, context) => {
       let result = ''

@@ -1,4 +1,4 @@
-import { DynamoDBClient, ListTablesCommand, PutItemCommand, GetItemCommand, ScanCommand, DeleteItemCommand } from "@aws-sdk/client-dynamodb";
+import { DynamoDBClient, ListTablesCommand, PutItemCommand, GetItemCommand, ScanCommand, UpdateItemCommand, DeleteItemCommand } from "@aws-sdk/client-dynamodb";
 
 
 (async () => {
@@ -75,6 +75,33 @@ const getUser = async () => {
     return 'Failed to get users'
   }
 }
+
+const updateUser = async(oldName, newName) => {
+  const client = new DynamoDBClient({
+    region: 'us-east-1'
+  })
+  const command = new UpdateItemCommand({
+    TableName: 'user',
+    Key: {
+      name: {
+        S: oldName
+      }
+    },
+    UpdateExpression: 'set name = :n',
+    ExpressionAttributeValues: {
+      ':n': {
+        S: newName
+      }
+    }
+  })
+  try {
+    const results = await client.send(command)
+    console.info('Updated user: ', results.Items)
+    return results
+  } catch(err) {
+    console.error('Error updating a user:', err)
+  }
+}
 const deleteUser = async (name) => {
   const client = new DynamoDBClient({
     region: 'us-east-1'
@@ -96,4 +123,4 @@ const deleteUser = async (name) => {
     return 'Nope'
   }
 }
-export { createUser, getUsers, getUser, deleteUser}
+export { createUser, getUsers, getUser, deleteUser, updateUser}
