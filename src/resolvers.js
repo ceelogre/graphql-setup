@@ -1,4 +1,4 @@
-import { createUser, getUsers} from './db.js'
+import { createUser, deleteUser, getUsers, updateUser} from './db.js'
 
 const resolvers = {
   Query: {
@@ -25,30 +25,40 @@ const resolvers = {
       }
     },
     update: (parent, args, context) => {
-      return context.prisma.user.update({
-        where: {
-          name: args.name
-        },
-        data: {
-          name: args.name_
-        }
-      })
+      if (process.env.NODE_ENV == 'development') {
+
+        return context.prisma.user.update({
+          where: {
+            name: args.name
+          },
+          data: {
+            name: args.name_
+          }
+        })
+    } else {
+      return updateUser(args.name, args.name_)
+    }
     },
     delete: (parent, args, context) => {
       let result = ''
-      try {
-        result = context.prisma.user.delete({
-          where: {
-            name: args.name
-          }
-        })
-      }
-      catch (e) {
-        console.error(e)
-        result = "There was an error deleting the user"
-      }
-      finally {
-        return result
+      if (process.env.NODE_ENV == 'development') {
+
+        try {
+          result = context.prisma.user.delete({
+            where: {
+              name: args.name
+            }
+          })
+        }
+        catch (e) {
+          console.error(e)
+          result = "There was an error deleting the user"
+        }
+        finally {
+          return result
+        }
+      } else {
+        return deleteUser(args.name)
       }
 
     }
