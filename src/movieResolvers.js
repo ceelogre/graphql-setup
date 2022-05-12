@@ -2,7 +2,7 @@
 const movieResolvers = {
   Query: {
     info: () => 'this is a movie API. 646',
-    users: async (parent, args, context) => {
+    movies: async (parent, args, context) => {
       if (process.env.NODE_ENV == 'development') {
         return context.prisma.Movie.findMany()
       } else {
