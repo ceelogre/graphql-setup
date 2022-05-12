@@ -5,7 +5,7 @@ const prisma = new PrismaClient()
 
 async function main () {
   await prisma.$connect()
-  const users = await getUsers()
+  const users = await getMovies()
   console.info(users)
 }
 
@@ -17,7 +17,7 @@ main()
   await prisma.$disconnect()
 })
 
-const getUsers = async () => {
-  return await prisma.user.findMany()
+const getMovies = async () => {
+  return await prisma.Movie.findMany()
 }
 export default prisma
