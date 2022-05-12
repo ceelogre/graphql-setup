@@ -15,10 +15,19 @@ const movieResolvers = {
       if (process.env.NODE_ENV == 'development') {
         const newMovie = context.prisma.Movie.create({
           data: {
-            name: args.title
+            title: args.title,
+            released: args.released,
+            rating: args.rating,
+            genre: args.genre,
+            description: args.description,
+            duration: args.duration
           }
         })
+        console.info('En')
         return newMovie
+      } else {
+        console.info('Hr')
+        return {error: "Env"}
       }
     },
     update: (parent, args, context) => {
