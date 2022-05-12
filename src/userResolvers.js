@@ -1,6 +1,6 @@
 import { createUser, deleteUser, getUsers, updateUser} from './db.js'
 
-const resolvers = {
+const userResolvers = {
   Query: {
     info: () => 'this is an API. 646',
     users: async (parent, args, context) => {
@@ -65,4 +65,4 @@ const resolvers = {
   }
 }
 
-export default resolvers
+export default userResolvers
