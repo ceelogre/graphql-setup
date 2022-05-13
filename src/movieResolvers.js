@@ -1,11 +1,10 @@
-import { createUser, deleteUser, getUsers, updateUser} from './db.js'
 
-const resolvers = {
+const movieResolvers = {
   Query: {
-    info: () => 'this is an API. 646',
-    users: async (parent, args, context) => {
+    info: () => 'this is a movie API. 646',
+    movies: async (parent, args, context) => {
       if (process.env.NODE_ENV == 'development') {
-        return context.prisma.user.findMany()
+        return context.prisma.Movie.findMany()
       } else {
         return getUsers()
       }
@@ -14,14 +13,21 @@ const resolvers = {
   Mutation: {
     post: (parent, args, context, info) => {
       if (process.env.NODE_ENV == 'development') {
-        const newUser = context.prisma.user.create({
+        const newMovie = context.prisma.Movie.create({
           data: {
-            name: args.name
+            title: args.title,
+            released: args.released,
+            rating: args.rating,
+            genre: args.genre,
+            description: args.description,
+            duration: args.duration
           }
         })
-        return newUser
+        console.info('En')
+        return newMovie
       } else {
-        return createUser(args.name)
+        console.info('Hr')
+        return {error: "Env"}
       }
     },
     update: (parent, args, context) => {
@@ -36,7 +42,7 @@ const resolvers = {
           }
         })
     } else {
-      return updateUser(args.name, args.name_)
+      return updateMovie(args.name, args.name_)
     }
     },
     delete: (parent, args, context) => {
@@ -44,7 +50,7 @@ const resolvers = {
       if (process.env.NODE_ENV == 'development') {
 
         try {
-          result = context.prisma.user.delete({
+          result = context.prisma.Movie.delete({
             where: {
               name: args.name
             }
@@ -65,4 +71,4 @@ const resolvers = {
   }
 }
 
-export default resolvers
+export default movieResolvers

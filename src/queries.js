@@ -5,19 +5,19 @@ const prisma = new PrismaClient()
 
 async function main () {
   await prisma.$connect()
-  const users = await getUsers()
-  console.info(users)
+  const movies = await getMovies()
+  movies.length == 0 ? console.info('No movies available'): console.info(movies)
 }
 
 main()
 .catch(error => {
-  throw error
+  console.error('Error running main prisma fx', error)
 })
 .finally(async () => {
   await prisma.$disconnect()
 })
 
-const getUsers = async () => {
-  return await prisma.user.findMany()
+const getMovies = async () => {
+  return await prisma.Movie.findMany()
 }
 export default prisma
