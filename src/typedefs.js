@@ -16,10 +16,11 @@ type Movie {
   rating: Int,
   genre: [String],
   description: String,
-  duration: Int
+  duration: Int,
+  poster: String
 }
 type Mutation {
-  post(title: String, released: String, rating: Int, genre: [String], description: String, duration: Int): Movie,
+  post(title: String, released: String, rating: Int, genre: [String], description: String, duration: Int, poster: String): Movie,
   update(name: String, name_: String): user!,
   delete(name: String): user!
 }
