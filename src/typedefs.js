@@ -1,29 +1,9 @@
-const typeDefs = `
-type Query {
-  info: String!,
-  users: [user]!,
-  movies: [Movie]
-}
-type user {
-   id: String!
-  ,name: String!
-}
 
-type Movie {
-  id: String!,
-  title: String!,
-  released: String!,
-  rating: Int,
-  genre: [String],
-  description: String,
-  duration: Int,
-  poster: String
-}
-type Mutation {
-  post(title: String, released: String, rating: Int, genre: [String], description: String, duration: Int, poster: String): Movie,
-  update(name: String, name_: String): user!,
-  delete(name: String): user!
-}
-`
+// import user.js and movies.js
+import user from './user.js'
+import movie from './movie.js'
+
+// merge the two schemas into type definitions
+const typeDefs = [user, movie]
 
 export default typeDefs
