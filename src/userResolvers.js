@@ -2,7 +2,6 @@ import { createUser, deleteUser, getUsers, updateUser} from './db.js'
 
 const userResolvers = {
   Query: {
-    info: () => 'this is an API. 646',
     users: async (parent, args, context) => {
       if (process.env.NODE_ENV == 'development') {
         return context.prisma.user.findMany()
@@ -12,7 +11,7 @@ const userResolvers = {
     }
   },
   Mutation: {
-    post: (parent, args, context, info) => {
+    postUser: (parent, args, context, info) => {
       if (process.env.NODE_ENV == 'development') {
         const newUser = context.prisma.user.create({
           data: {
@@ -24,7 +23,7 @@ const userResolvers = {
         return createUser(args.name)
       }
     },
-    update: (parent, args, context) => {
+    updateUser: (parent, args, context) => {
       if (process.env.NODE_ENV == 'development') {
 
         return context.prisma.user.update({
@@ -39,7 +38,7 @@ const userResolvers = {
       return updateUser(args.name, args.name_)
     }
     },
-    delete: (parent, args, context) => {
+    deleteUser: (parent, args, context) => {
       let result = ''
       if (process.env.NODE_ENV == 'development') {
 

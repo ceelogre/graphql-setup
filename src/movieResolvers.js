@@ -1,7 +1,6 @@
 
 const movieResolvers = {
   Query: {
-    info: () => 'this is a movie API. 646',
     movies: async (parent, args, context) => {
       if (process.env.NODE_ENV == 'development') {
         const movies = await context.prisma.Movie.findMany()
@@ -12,7 +11,7 @@ const movieResolvers = {
     }
   },
   Mutation: {
-    post: (parent, args, context, info) => {
+    postMovie: (parent, args, context, info) => {
       if (process.env.NODE_ENV == 'development') {
         const newMovie = context.prisma.Movie.create({
           data: {
@@ -24,29 +23,26 @@ const movieResolvers = {
             duration: args.duration
           }
         })
-        console.info('En')
         return newMovie
       } else {
-        console.info('Hr')
         return {error: "Env"}
       }
     },
-    update: (parent, args, context) => {
+    updateMovie: (parent, args, context) => {
       if (process.env.NODE_ENV == 'development') {
+        const updateMovie = buildUpdateMovie(args)
 
-        return context.prisma.user.update({
+        return context.prisma.Movie.update({
           where: {
-            name: args.name
+            id: args.id
           },
-          data: {
-            name: args.name_
-          }
+          data: updateMovie
         })
     } else {
       return updateMovie(args.name, args.name_)
     }
     },
-    delete: (parent, args, context) => {
+    deleteMovie: (parent, args, context) => {
       let result = ''
       if (process.env.NODE_ENV == 'development') {
 
@@ -71,5 +67,13 @@ const movieResolvers = {
     }
   }
 }
-
+const buildUpdateMovie = (args) => {
+  let updateMovie = {}
+  for (let key in args) {
+    if (key != 'id') {
+      updateMovie[key] = args[key]
+    }
+  }
+  return updateMovie
+}
 export default movieResolvers
