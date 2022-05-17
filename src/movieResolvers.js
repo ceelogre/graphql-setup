@@ -2,68 +2,49 @@
 const movieResolvers = {
   Query: {
     movies: async (parent, args, context) => {
-      if (process.env.NODE_ENV == 'development') {
-        const movies = await context.prisma.Movie.findMany()
-        return movies
-      } else {
-        return getUsers()
-      }
+      const movies = await context.prisma.Movie.findMany()
+      return movies
     }
   },
   Mutation: {
     postMovie: (parent, args, context, info) => {
-      if (process.env.NODE_ENV == 'development') {
-        const newMovie = context.prisma.Movie.create({
-          data: {
-            title: args.title,
-            released: args.released,
-            rating: args.rating,
-            genre: args.genre,
-            description: args.description,
-            duration: args.duration
-          }
-        })
-        return newMovie
-      } else {
-        return {error: "Env"}
-      }
+      const newMovie = context.prisma.Movie.create({
+        data: {
+          title: args.title,
+          released: args.released,
+          rating: args.rating,
+          genre: args.genre,
+          description: args.description,
+          duration: args.duration
+        }
+      })
     },
     updateMovie: (parent, args, context) => {
-      if (process.env.NODE_ENV == 'development') {
-        const updateMovie = buildUpdateMovie(args)
+      const updateMovie = buildUpdateMovie(args)
 
-        return context.prisma.Movie.update({
-          where: {
-            id: args.id
-          },
-          data: updateMovie
-        })
-    } else {
-      return updateMovie(args.name, args.name_)
-    }
+      return context.prisma.Movie.update({
+        where: {
+          id: args.id
+        },
+        data: updateMovie
+      })
     },
     deleteMovie: (parent, args, context) => {
       let result = ''
-      if (process.env.NODE_ENV == 'development') {
-
-        try {
-          result = context.prisma.Movie.delete({
-            where: {
-              name: args.name
-            }
-          })
-        }
-        catch (e) {
-          console.error(e)
-          result = "There was an error deleting the user"
-        }
-        finally {
-          return result
-        }
-      } else {
-        return deleteUser(args.name)
+      try {
+        result = context.prisma.Movie.delete({
+          where: {
+            name: args.name
+          }
+        })
       }
-
+      catch (e) {
+        console.error(e)
+        result = "There was an error deleting the user"
+      }
+      finally {
+        return result
+      }
     }
   }
 }
