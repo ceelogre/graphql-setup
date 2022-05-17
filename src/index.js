@@ -12,7 +12,8 @@ const server = new ApolloServer({
     prisma
   }
 })
-
 server
-  .listen()
+  .listen({
+    port: process.env.NODE_ENV === 'production' ? process.env.PORT : 4000
+  })
   .then(({ url }) => console.info(`running on ${url}`))
