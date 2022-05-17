@@ -15,9 +15,11 @@ const movieResolvers = {
           rating: args.rating,
           genre: args.genre,
           description: args.description,
-          duration: args.duration
+          duration: args.duration,
+          poster: args.poster
         }
       })
+      return newMovie
     },
     updateMovie: (parent, args, context) => {
       const updateMovie = buildUpdateMovie(args)
@@ -34,7 +36,7 @@ const movieResolvers = {
       try {
         result = context.prisma.Movie.delete({
           where: {
-            name: args.name
+            id: args.id
           }
         })
       }
