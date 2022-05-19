@@ -4,6 +4,8 @@ import prisma from './queries.js'
 import typeDefs from './typedefs.js'
 import resolvers from './resolvers.js'
 
+import express from 'express'
+const app = express()
 
 const server = new ApolloServer({
   typeDefs,
@@ -12,8 +14,14 @@ const server = new ApolloServer({
     prisma
   }
 })
-server
-  .listen({
-    port: process.env.NODE_ENV === 'production' ? process.env.PORT : 4000
+
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Welcome to your EC2 instance'
   })
-  .then(({ url }) => console.info(`running on ${url}`))
+})
+const port = process.env.NODE_ENV === 'production' ? process.env.PORT : 4000
+app
+  .listen(
+   port 
+  , () => console.info(`On port ${port} `))
