@@ -8,5 +8,7 @@ On MacOS, this can be accomplished by running `killall mongod`
 mongod --port 27017 --dbpath /data/db --replSet rs0 --bind_ip localhost
 ```
 
-Please make sure that `/data/db` exists on your file system.
+Note: Please make sure that `/data/db` exists on your file system.  
 3. start a new mongo shell: `mongo` and run `rs.initiate()`
+
+Optionally, you can use a hosted db service like MongoDB Atlas.
