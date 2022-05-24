@@ -1,3 +1,7 @@
+const def = `
+type Query {
+  hello: String
+}`
 const movie = `
 type Query {
   movies: [Movie]
@@ -19,4 +23,4 @@ type Mutation {
 }
 `
 
-export default movie
+export {def, movie}

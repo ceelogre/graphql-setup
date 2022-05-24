@@ -1,9 +1,9 @@
 
 // import user.js and movies.js
 import user from './user.js'
-import movie from './movie.js'
+import {def, movie} from './movie.js'
 
 // merge the two schemas into type definitions
-const typeDefs = [user, movie]
+const typeDefs = [user,def, movie]
 
 export default typeDefs
