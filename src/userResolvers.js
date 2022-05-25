@@ -11,6 +11,7 @@ const userResolvers = {
           name: args.name
         }
       })
+      return newUser
     },
     updateUser: (parent, args, context) => {
       return context.prisma.user.update({
