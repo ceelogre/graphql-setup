@@ -2,6 +2,9 @@ const user =`
 type Query {
   users: [user]!
 }
+type Query {
+  user(id: ID!): user
+}
 type user {
    id: String!
   ,name: String!

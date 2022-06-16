@@ -2,6 +2,13 @@ const userResolvers = {
   Query: {
     users: async (parent, args, context) => {
       return context.prisma.user.findMany()
+    },
+    user: async(parent, args, context) => {
+      return context.prisma.user.findUnique({
+        where: {
+          id: args.id
+        }
+      })
     }
   },
   Mutation: {
