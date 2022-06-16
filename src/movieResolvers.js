@@ -5,6 +5,13 @@ const movieResolvers = {
     movies: async (parent, args, context) => {
       const movies = await context.prisma.Movie.findMany()
       return movies
+    },
+    movie: async(parent, args, context) => {
+      return context.prisma.Movie.findUnique({
+        where: {
+          id: args.id
+        }
+      })
     }
   },
   Mutation: {

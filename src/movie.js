@@ -4,7 +4,8 @@ type Query {
 }`
 const movie = `
 type Query {
-  movies: [Movie]
+  movies: [Movie],
+  movie(id: ID!): Movie
 }
 type Movie {
   id: String!,
