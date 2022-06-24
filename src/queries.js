@@ -5,8 +5,6 @@ const prisma = new PrismaClient()
 
 async function main () {
   await prisma.$connect()
-  const movies = await getMovies()
-  movies.length == 0 ? console.info('No movies available'): console.info(movies)
 }
 
 main()
@@ -17,7 +15,4 @@ main()
   await prisma.$disconnect()
 })
 
-const getMovies = async () => {
-  return await prisma.Movie.findMany()
-}
 export default prisma
