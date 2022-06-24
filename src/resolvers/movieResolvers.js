@@ -1,7 +1,6 @@
 
 const movieResolvers = {
   Query: {
-    hello: () => 'Hello Welcome to AWS',
     movies: async (parent, args, context) => {
       const movies = await context.prisma.Movie.findMany()
       return movies
