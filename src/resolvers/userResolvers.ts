@@ -1,9 +1,9 @@
 const userResolvers = {
   Query: {
-    users: async (parent, args, context) => {
+    users: async (parent: any, args: any, context: any) => {
       return context.prisma.user.findMany()
     },
-    user: async(parent, args, context) => {
+    user: async(parent: any, args: any, context: any) => {
       return context.prisma.user.findUnique({
         where: {
           id: args.id
@@ -12,7 +12,7 @@ const userResolvers = {
     }
   },
   Mutation: {
-    postUser: (parent, args, context, info) => {
+    postUser: (parent: any, args: any, context: any) => {
       const newUser = context.prisma.user.create({
         data: {
           name: args.name
@@ -20,7 +20,7 @@ const userResolvers = {
       })
       return newUser
     },
-    updateUser: (parent, args, context) => {
+    updateUser: (parent: any, args: any, context: any) => {
       return context.prisma.user.update({
         where: {
           name: args.name
@@ -30,7 +30,7 @@ const userResolvers = {
         }
       })
     },
-    deleteUser: (parent, args, context) => {
+    deleteUser: (parent: any, args: any, context: any) => {
       let result = ''
       try {
         result = context.prisma.user.delete({

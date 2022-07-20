@@ -1,8 +1,8 @@
 import { ApolloServer } from 'apollo-server'
 import 'dotenv/config'
-import prisma from './queries.js'
-import typeDefs from './typedefs/typedefs.js'
-import resolvers from './resolvers/resolvers.js'
+import prisma from './queries'
+import typeDefs from './typedefs/typedefs'
+import resolvers from './resolvers/resolvers'
 
 const server = new ApolloServer({
   typeDefs,

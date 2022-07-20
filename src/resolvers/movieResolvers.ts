@@ -1,11 +1,11 @@
 
 const movieResolvers = {
   Query: {
-    movies: async (parent, args, context) => {
+    movies: async (parent: any, args: any, context: { prisma: { Movie: { findMany: () => any } } }) => {
       const movies = await context.prisma.Movie.findMany()
       return movies
     },
-    movie: async(parent, args, context) => {
+    movie: async(parent: any, args: any, context: any) => {
       return context.prisma.Movie.findUnique({
         where: {
           id: args.id
@@ -14,7 +14,7 @@ const movieResolvers = {
     }
   },
   Mutation: {
-    postMovie: (parent, args, context, info) => {
+    postMovie: (parent: any, args: any, context: any) => {
       const newMovie = context.prisma.Movie.create({
         data: {
           title: args.title,
@@ -28,7 +28,7 @@ const movieResolvers = {
       })
       return newMovie
     },
-    updateMovie: (parent, args, context) => {
+    updateMovie: (parent: any, args: any, context: any) => {
       const updateMovie = buildUpdateMovie(args)
 
       return context.prisma.Movie.update({
@@ -38,7 +38,7 @@ const movieResolvers = {
         data: updateMovie
       })
     },
-    deleteMovie: (parent, args, context) => {
+    deleteMovie: (parent: any, args: any, context: any) => {
       let result = ''
       try {
         result = context.prisma.Movie.delete({
@@ -57,8 +57,8 @@ const movieResolvers = {
     }
   }
 }
-const buildUpdateMovie = (args) => {
-  let updateMovie = {}
+const buildUpdateMovie = (args: any) => {
+  let updateMovie: any = {}
   for (let key in args) {
     if (key != 'id') {
       updateMovie[key] = args[key]

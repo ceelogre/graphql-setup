@@ -1,5 +1,5 @@
-import userResolvers from './userResolvers.js'
-import movieResolvers from './movieResolvers.js'
+import userResolvers from './userResolvers'
+import movieResolvers from './movieResolvers'
 
 // merge the two resolvers
 const resolvers = {
